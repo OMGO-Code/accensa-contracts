@@ -117,6 +117,8 @@
 
 - [x] `apply_decay` guards `SCORE_FLOOR + decayed` with `checked_add` and states the precondition that keeps the sum in range (#724)
 
-## Issue #726: guard `record_fraud`'s penalty product against overflow
+## Issue #723: guard `recall_principal`'s sums against overflow
 
-- [x] `record_fraud` computes its basis-point penalty with `checked_mul`; the product of two `u64` values fits in `u128`, so the failure arm states that precondition and every reachable score stays exact (#726)
+- [x] Route both `recall_principal` sums through `add_amounts` (#723)
+  - `contracts/refund-vault/src/strategy.rs` — typed `Error::MathOverflow` instead of a host abort
+  - `contracts/refund-vault/src/recall_principal_overflow_tests.rs` — boundary tests drive both sums to `i128::MAX`
