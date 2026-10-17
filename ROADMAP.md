@@ -112,3 +112,7 @@
 
 - [x] Compute the new hashlock reservation with `add_amounts` so an out-of-range sum returns `Error::MathOverflow` instead of trapping (#727)
   - `contracts/state-channel/src/hashlock.rs` — the reservation update uses the shared checked helper; the escrow ceiling above it remains the precondition that keeps every reachable sum in range
+
+## Issue #724: guard `apply_decay`'s final addition against overflow
+
+- [x] `apply_decay` guards `SCORE_FLOOR + decayed` with `checked_add` and states the precondition that keeps the sum in range (#724)
