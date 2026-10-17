@@ -93,7 +93,12 @@
 
 - [x] `prune_batches` answers `Error::NotInitialized` instead of aborting the host call when `Router`, `EndBatchId` or `PrunedUpTo` is absent (before construction or after the instance entry ages out) (#679)
 
-## Issue #728: guard state-channel::add's reservation sum against overflow
+## Issue #745: rustdoc for reentrancy's 4 exported names
 
-- [x] Compute the new HTLC reservation with `add_amounts` so an out-of-range sum returns `Error::MathOverflow` instead of trapping (#728)
-  - `contracts/state-channel/src/htlc.rs` — the reservation update uses the shared checked helper; the escrow ceiling above it remains the precondition that keeps every reachable sum in range
+- [x] Document `ReentrancyDataKey`, `ReentrancyGuard`, `acquire` and `release` (#745)
+  - `contracts/common/src/reentrancy.rs` — doc comments only, no signature, body or test changes
+
+## Issue #744: rustdoc for receipt-anchor/lib's 6 exported names
+
+- [x] Document `DataKey`, `ReceiptAnchor`, `initialize`, `get_batch`, `verify_receipt` and `get_shard_capacity` (#744)
+  - `contracts/receipt-anchor/src/lib.rs` — doc comments only; `initialize` states its no-auth/once pre-condition and `Error::AlreadyInitialized` arm, `get_batch` and `verify_receipt` state the `BatchNotFound`/`ProofTooLong`/`ShardCallFailed` arms, and the getter is marked infallible
