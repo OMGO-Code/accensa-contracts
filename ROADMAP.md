@@ -92,3 +92,8 @@
 ## Issue #679: receipt-shard::prune_batches traps on an uninitialised Router
 
 - [x] `prune_batches` answers `Error::NotInitialized` instead of aborting the host call when `Router`, `EndBatchId` or `PrunedUpTo` is absent (before construction or after the instance entry ages out) (#679)
+
+## Issue #728: guard state-channel::add's reservation sum against overflow
+
+- [x] Compute the new HTLC reservation with `add_amounts` so an out-of-range sum returns `Error::MathOverflow` instead of trapping (#728)
+  - `contracts/state-channel/src/htlc.rs` — the reservation update uses the shared checked helper; the escrow ceiling above it remains the precondition that keeps every reachable sum in range
