@@ -8,6 +8,15 @@ breaking changes bump the **minor** version, and they are called out as such.
 
 ## [Unreleased]
 
+- **`state-channel` (issue #727): compute the hashlock reservation total with
+  checked arithmetic.** `hashlock::add` now combines `already_reserved` and the
+  new payment's `amount` through `accensa_common::math::add_amounts`, so an
+  out-of-range sum surfaces `Error::MathOverflow` instead of relying on the
+  release profile's overflow trap. The escrow ceiling check immediately above
+  keeps every reachable sum in range; the new
+  `contracts/state-channel/src/hashlock_overflow_test.rs` drives the
+  reservation total to exactly `i128::MAX` and pins the typed rejection when
+  the next reservation update would step past it.
 - **`state-channel` (issue #728): compute the HTLC reservation total with
   checked arithmetic.** `htlc::add` now combines `already_reserved` and the
   new hop's `amount` through `accensa_common::math::add_amounts`, so an

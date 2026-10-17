@@ -107,3 +107,8 @@
 
 - [x] Compute the new HTLC reservation with `add_amounts` so an out-of-range sum returns `Error::MathOverflow` instead of trapping (#728)
   - `contracts/state-channel/src/htlc.rs` — the reservation update uses the shared checked helper; the escrow ceiling above it remains the precondition that keeps every reachable sum in range
+
+## Issue #727: guard state-channel::hashlock::add's reservation sum against overflow
+
+- [x] Compute the new hashlock reservation with `add_amounts` so an out-of-range sum returns `Error::MathOverflow` instead of trapping (#727)
+  - `contracts/state-channel/src/hashlock.rs` — the reservation update uses the shared checked helper; the escrow ceiling above it remains the precondition that keeps every reachable sum in range

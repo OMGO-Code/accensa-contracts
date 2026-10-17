@@ -7,6 +7,8 @@ mod crypto_test;
 #[cfg(test)]
 mod delegation_test;
 #[cfg(test)]
+mod hashlock_overflow_test;
+#[cfg(test)]
 mod hashlock_test;
 #[cfg(test)]
 mod htlc_overflow_test;
