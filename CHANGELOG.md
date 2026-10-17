@@ -8,20 +8,8 @@ breaking changes bump the **minor** version, and they are called out as such.
 
 ## [Unreleased]
 
-- **`reputation` (issue #725): guard `record_completion`'s growth product and
-  sum against overflow.** `record_completion` now computes its growth with
-  `u128::checked_mul` and applies it with `u64::checked_add` instead of a bare
-  `*` and `+`, so neither line depends on the release profile's
-  `overflow-checks = true` trapping the host call. Both failure arms are
-  stated preconditions rather than a new error variant, since `CreditError` is
-  out of scope: `headroom` is capped by `MAX_SCORE` before the multiplication,
-  and `GROWTH_RATE_BPS` (2_500) sits under its 10_000 denominator, so `growth
-  <= headroom` and the sum never passes `MAX_SCORE`. New
-  `contracts/reputation/src/credit_score_completion_overflow_test.rs` drives
-  both operands to their reachable maximum through the public entry point and
-  asserts the exact returned score instead of a host abort.
-- **`state-channel` (issue #612): assert watchtower bounty events and bounty key lifecycle.**
-  Extended `contracts/state-channel/src/watchtower_test.rs` asserting exact event XDR for `WatchtowerBountySetEvent` and `WatchtowerRewardEvent`, and pinned post-payout instance storage under `DataKey::Bounty`.
+- **`treasury` (issue #649): return typed InsufficientBalance error on unfunded yield float.**
+  `claim_yield` reads the contract's yield token balance before mutating user `pending` or `claimed` and returns `Error::InsufficientBalance` when the balance cannot cover the claim, leaving accrued yield intact.
 - **`insurance` (issue #608): assert deposit, withdraw, borrow and repay lifecycle events.**
   Extended `contracts/insurance/src/test.rs` with `lifecycle_events` asserting exact event XDR, cross-checking storage values, and asserting zero balance on emptied positions.
 - **`receipt-shard` (issue #678): return typed error on missing state in has_live_records.**
