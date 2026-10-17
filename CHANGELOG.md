@@ -8,23 +8,9 @@ breaking changes bump the **minor** version, and they are called out as such.
 
 ## [Unreleased]
 
-- **`state-channel` (issue #727): compute the hashlock reservation total with
-  checked arithmetic.** `hashlock::add` now combines `already_reserved` and the
-  new payment's `amount` through `accensa_common::math::add_amounts`, so an
-  out-of-range sum surfaces `Error::MathOverflow` instead of relying on the
-  release profile's overflow trap. The escrow ceiling check immediately above
-  keeps every reachable sum in range; the new
-  `contracts/state-channel/src/hashlock_overflow_test.rs` drives the
-  reservation total to exactly `i128::MAX` and pins the typed rejection when
-  the next reservation update would step past it.
-- **`state-channel` (issue #728): compute the HTLC reservation total with
-  checked arithmetic.** `htlc::add` now combines `already_reserved` and the
-  new hop's `amount` through `accensa_common::math::add_amounts`, so an
-  out-of-range sum surfaces `Error::MathOverflow` instead of relying on the
-  release profile's overflow trap. The escrow ceiling check immediately above
-  keeps every reachable sum in range; the new
-  `contracts/state-channel/src/htlc_overflow_test.rs` drives the reservation
-  total to exactly `i128::MAX` and pins the typed rejection one stroop past it.
+### Removed
+- Issue #572: Removed the uncompiled, unreferenced source files `contracts/governance/src/liquid_staking_impl.rs`, `contracts/refund-vault/src/guard.rs`, and `contracts/refund-vault/src/test/test/refund_vectors.rs`. No compiled contract behavior changed.
+  
 - **`receipt-anchor` (issue #744): rustdoc for `lib.rs`'s 6 undocumented
   public items.** `contracts/receipt-anchor/src/lib.rs` now documents
   `DataKey`, `ReceiptAnchor`, `initialize` (its no-auth, once-only pre-condition
