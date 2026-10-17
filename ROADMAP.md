@@ -116,3 +116,7 @@
 ## Issue #724: guard `apply_decay`'s final addition against overflow
 
 - [x] `apply_decay` guards `SCORE_FLOOR + decayed` with `checked_add` and states the precondition that keeps the sum in range (#724)
+
+## Issue #726: guard `record_fraud`'s penalty product against overflow
+
+- [x] `record_fraud` computes its basis-point penalty with `checked_mul`; the product of two `u64` values fits in `u128`, so the failure arm states that precondition and every reachable score stays exact (#726)
