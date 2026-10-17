@@ -122,3 +122,7 @@
 - [x] Route both `recall_principal` sums through `add_amounts` (#723)
   - `contracts/refund-vault/src/strategy.rs` — typed `Error::MathOverflow` instead of a host abort
   - `contracts/refund-vault/src/recall_principal_overflow_tests.rs` — boundary tests drive both sums to `i128::MAX`
+
+## Issue #725: guard `record_completion`'s growth product and sum against overflow
+
+- [x] `record_completion` computes its growth with `checked_mul` and lands the score with `checked_add`; `headroom` is capped by `MAX_SCORE` and `growth <= headroom`, so the failure arms state those preconditions and no error variant is added (#725)
